@@ -15,6 +15,7 @@
     <Form-item>
       <Button type="primary" @click="handleSubmit('formInline')" size="large">登录</Button>
     </Form-item>
+
   </Form>
 </template>
 <script>
