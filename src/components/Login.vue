@@ -1,7 +1,9 @@
 <template>
+
   <Form ref="formInline" :model="formInline" :rules="ruleInline" class="login_cat_form">
-    <Form-item prop="user" class="login_cat">
-      <Input type="text" v-model="formInline.user" placeholder="Username">
+    <img src="../assets/image/logo.png" class="logo">
+    <Form-item prop="name" class="login_cat">
+      <Input type="text" v-model="formInline.name" placeholder="Username">
       <Icon type="ios-person-outline" slot="prepend"></Icon>
       </Input>
     </Form-item>
@@ -11,20 +13,22 @@
       </Input>
     </Form-item>
     <Form-item>
-      <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+      <Button type="primary" @click="handleSubmit('formInline')" size="large">登录</Button>
     </Form-item>
   </Form>
 </template>
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
+    name: 'login',
+    beforeMount:function () {
+      this.$store.dispatch('ReadLocal');
+    },
     data () {
       return {
-        formInline: {
-          user: '',
-          password: ''
-        },
         ruleInline: {
-          user: [
+          name: [
             {required: true, message: '请填写用户名', trigger: 'blur'}
           ],
           password: [
@@ -34,13 +38,17 @@
         }
       }
     },
+    computed: mapGetters(
+      [
+        'formInline'
+      ]
+    ),
+
     methods: {
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('提交成功!')
-          } else {
-            this.$Message.error('表单验证失败!')
+            this.$store.dispatch('LoginCheck');
           }
         })
       }
@@ -48,11 +56,12 @@
   }
 </script>
 <style scoped lang="less" rel="stylesheet/less">
-  .login_cat_form{
+  .login_cat_form {
     width: 800px;
     margin: 0 auto;
   }
-  .login_cat{
+
+  .login_cat {
     width: 40%;
     margin: 20px auto;
 
