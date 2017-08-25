@@ -5,10 +5,7 @@ import Router from '../router/index'
 
 const vue =new Vue();
 const state = {
-  formInline: localStorage.getItem('user')||{
-    name: '',
-    password: '',
-  },
+  formInline: JSON.parse(localStorage.getItem('user'))||{},
 };
 
 const userCheck=function () {
@@ -32,10 +29,7 @@ const mutations = {
     userCheck();
   },
   [types.Read_Local](state){
-    let userInfo =JSON.parse(localStorage.getItem('user'))||'';
-    if(userInfo){
-      state.formInline.name =userInfo.name;
-      state.formInline.password =userInfo.password;
+    if(state.formInline){
       userCheck();
     }else{
       Router.push({path:'/login'});
