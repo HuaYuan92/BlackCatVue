@@ -5,7 +5,7 @@ import Router from '../router/index'
 
 const vue =new Vue();
 const state = {
-  formInline: {
+  formInline: localStorage.getItem('user')||{
     name: '',
     password: '',
   },
@@ -20,7 +20,8 @@ const userCheck=function () {
       Router.push({path:'/home'});
 
     }else{
-      vue.$Message.error('表单验证失败!')
+      vue.$Message.error('登录失败!');
+      Router.push({path:'/login'});
     }
   }).catch(function (err) {
     console.log(err);
@@ -36,6 +37,9 @@ const mutations = {
       state.formInline.name =userInfo.name;
       state.formInline.password =userInfo.password;
       userCheck();
+    }else{
+      Router.push({path:'/login'});
+
     }
   }
 };

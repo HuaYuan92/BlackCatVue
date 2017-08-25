@@ -8,6 +8,9 @@
 <script>
   export default {
     name: 'app',
+    beforeMount:function () {
+      this.$store.dispatch('ReadLocal');
+    },
 
   }
 </script>
@@ -22,6 +25,8 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    width: 100%;
+    height: 100%;
     .logo {
       margin-top: 60px;
     }
@@ -30,10 +35,12 @@
 
   html {
     text-align: center;
+    height: 100%;
   }
 
   body {
     width: 100%;
-    min-width: 800px;
+    min-width: 1350px;
+    height: 100%;
   }
 </style>

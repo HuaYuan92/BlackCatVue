@@ -23,9 +23,6 @@
 
   export default {
     name: 'login',
-    beforeMount:function () {
-      this.$store.dispatch('ReadLocal');
-    },
     data () {
       return {
         ruleInline: {
