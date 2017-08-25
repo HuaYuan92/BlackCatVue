@@ -11,6 +11,7 @@ import store from './store'
 
 Vue.use(Iview)
 Vue.config.productionTip = false
+Vue.prototype.route =router;
 
 /* eslint-disable no-new */
 new Vue({

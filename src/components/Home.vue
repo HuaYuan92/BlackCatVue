@@ -9,33 +9,43 @@
             <Icon type="search"></Icon>
             <span class="meun_item">黑名单查询</span>
           </template>
-          <router-link to="personlist" append>
-            <Menu-item name="1-1"> 个人黑名单查询</Menu-item>
-          </router-link>
-          <router-link to="entlist" append>
-            <Menu-item name="1-2">企业黑名单查询</Menu-item>
-          </router-link>
+          <Menu-item name="1-1">
+            <router-link to="/home/personlist" class="router_link">
+              个人黑名单查询
+            </router-link>
+          </Menu-item>
+          <Menu-item name="1-2">
+            <router-link to="/home/entlist" class="router_link">
+              企业黑名单查询
+            </router-link>
+          </Menu-item>
         </Submenu>
         <Submenu name="2">
           <template slot="title">
             <Icon type="android-star-half"></Icon>
             查询统计信息
           </template>
-          <router-link to="infolist" append>
-            <Menu-item name="2-1">统计信息概览</Menu-item>
-          </router-link>
+          <Menu-item name="2-1">
+            <router-link to="/home/infolist" class="router_link">
+              统计信息概览
+            </router-link>
+          </Menu-item>
         </Submenu>
         <Submenu name="3">
           <template slot="title">
             <Icon type="android-folder-open"></Icon>
             已保存黑名单
           </template>
-          <router-link to="personhold" append>
-            <Menu-item name="3-1">企业已保存黑名单</Menu-item>
-          </router-link>
-          <router-link to="enthold" append>
-            <Menu-item name="3-2">个人已保存黑名单</Menu-item>
-          </router-link>
+          <Menu-item name="3-1">
+            <router-link to="/home/personhold" class="router_link">
+              企业已保存黑名单
+            </router-link>
+          </Menu-item>
+          <Menu-item name="3-2">
+            <router-link to="/home/enthold" class="router_link">
+              个人已保存黑名单
+            </router-link>
+          </Menu-item>
         </Submenu>
       </Menu>
     </div>
@@ -48,11 +58,11 @@
           <div></div>
           <div></div>
           <div></div>
-            <div class="help" @click="help">
-              <Icon type="help" size="16"></Icon>
-              <span>帮助</span>
+          <div class="help" @click="help">
+            <Icon type="help" size="16"></Icon>
+            <span>帮助</span>
 
-            </div>
+          </div>
           <div>
             <Icon type="android-person" size="16"></Icon>
             <span>{{formInline.name}}</span>
@@ -62,6 +72,7 @@
         </div>
       </div>
       <div class="content_bottom">
+        <router-view></router-view>
 
       </div>
 
@@ -79,10 +90,10 @@
         theme: 'dark'
       }
     },
-    methods:{
-        help(){
-            alert("帮助");
-        }
+    methods: {
+      help(){
+        alert("帮助");
+      }
 
     },
     computed: mapGetters(
@@ -106,7 +117,7 @@
     height: 100%;
     .logo_div {
       width: 100%;
-      height: 10%;
+      height: 8%;
       font-size: 20px;
       background: url('../assets/image/logo_b.png') no-repeat center;
       background-size: cover;
@@ -120,15 +131,24 @@
     .meun_item {
       letter-spacing: 2px;
     }
-
+    .router_link {
+      color: inherit;
+      display: inline-block;
+      width: 100%;
+      padding: 14px 24px;
+      padding-left: 40px;
+    }
   }
 
+  .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
+    padding: 0;
+  }
   .content {
     flex: 7;
     height: 100%;
     .content_top {
       width: 100%;
-      height: 10%;
+      height: 8%;
       display: flex;
       .content_top_title {
         flex: 1;
@@ -141,16 +161,16 @@
         flex: 1;
         display: flex;
         align-items: center;
-        div{
-          flex:1;
-          span{
+        div {
+          flex: 1;
+          span {
             display: inline-block;
-            font-size:16px;
-            padding-left:6px;
+            font-size: 16px;
+            padding-left: 6px;
             line-height: 16px;
           }
         }
-        .help{
+        .help {
           cursor: pointer;
         }
 
@@ -158,7 +178,7 @@
     }
     .content_bottom {
       width: 100%;
-      height: 90%;
+      height: 92%;
     }
 
   }
