@@ -37,12 +37,12 @@
             已保存黑名单
           </template>
           <Menu-item name="3-1">
-            <router-link to="/home/personhold" class="router_link">
+            <router-link to="/home/enthold" class="router_link">
               企业已保存黑名单
             </router-link>
           </Menu-item>
           <Menu-item name="3-2">
-            <router-link to="/home/enthold" class="router_link">
+            <router-link to="/home/personhold" class="router_link">
               个人已保存黑名单
             </router-link>
           </Menu-item>
