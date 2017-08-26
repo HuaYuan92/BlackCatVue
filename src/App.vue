@@ -39,7 +39,7 @@
 
   body {
     width: 100%;
-    min-width: 1350px;
+    min-width: 1400px;
     height: 100%;
   }
 </style>
