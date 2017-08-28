@@ -7,5 +7,11 @@ export default {
   ReadLocal:({commit})=>{
     commit(types.Read_Local)
   },
+  SearchName:({commit})=>{
+    commit(types.Search_Name)
+  },
+  SearchCode:({commit})=>{
+    commit(types.Search_Code)
+  },
 
 }

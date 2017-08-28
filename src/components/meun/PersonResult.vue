@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="title">企业黑名单查询</div>
+    <div class="title">个人黑名单查询</div>
     <div class="content_box">
       111111111111
     </div>
@@ -9,7 +9,7 @@
 </template>
 <script>
   export default {
-    name: 'entlist',
+    name: 'personresult',
   }
 
 </script>

@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
-import PersonList from '@/components/meun/person'
-import EntList from '@/components/meun/entlist'
+import PersonList from '@/components/meun/Person'
+import PersonResult from '@/components/meun/PersonResult'
+import EntList from '@/components/meun/EntList'
+import EntResult from '@/components/meun/EntResult'
 import InfoList from '@/components/info/InfoList'
 import PersonHold from '@/components/hold/PersonHold'
 import EntHold from '@/components/hold/EntHold'
@@ -14,10 +16,6 @@ export default new Router({
   mode: 'history',
   scrollBehavior: () => ({y: 0}),
   routes: [
-    {
-      path: '/',
-      component: Login
-    },
     {
       path: '/login',
       component: Login
@@ -31,8 +29,16 @@ export default new Router({
           component: PersonList,
         },
         {
+          path: 'personresult',
+          component: PersonResult,
+        },
+        {
           path: 'entlist',
           component: EntList,
+        },
+        {
+          path: 'entresult',
+          component: EntResult,
         },
         {
           path: 'infolist',
@@ -48,6 +54,10 @@ export default new Router({
         },
 
       ]
-    }
+    },
+    {
+      path: '/*',
+      component: Login
+    },
   ]
 })

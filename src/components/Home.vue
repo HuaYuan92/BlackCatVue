@@ -144,11 +144,12 @@
     padding: 0;
   }
   .content {
-    flex: 7;
+    flex: 6;
     height: 100%;
     .content_top {
       width: 100%;
       height: 8%;
+      min-height:50px;
       display: flex;
       .content_top_title {
         flex: 1;

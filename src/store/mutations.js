@@ -6,6 +6,10 @@ import Router from '../router/index'
 const vue =new Vue();
 const state = {
   formInline: JSON.parse(localStorage.getItem('user'))||{},
+  search:{
+    entname:'',
+    entcode:''
+  }
 };
 
 const userCheck=function () {
@@ -18,7 +22,7 @@ const userCheck=function () {
       console.log(' login success');
       localStorage.setItem('user',JSON.stringify(state.formInline));
       flag= true;
-      Router.push({path:'/home'});
+      Router.push({path:'/home/personlist'});
     }else{
       vue.$Message.error('登录失败!');
       Router.push({path:'/login'});
@@ -39,12 +43,22 @@ const mutations = {
       Router.push({path:'/login'});
 
     }
-  }
+  },
+  [types.Search_Name](state){
+    Router.push({path:'/home/entresult'});
+  },
+  [types.Search_Code](state){
+    Router.push({path:'/home/entresult'});
+  },
+
 };
 const getters = {
   formInline: (state) => {
     return state.formInline
   },
+  search:(state)=>{
+    return state.search
+  }
 };
 export default {
   state,
