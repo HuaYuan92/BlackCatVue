@@ -41,5 +41,6 @@
     width: 100%;
     min-width: 1400px;
     height: 100%;
+    min-height:740px;
   }
 </style>
