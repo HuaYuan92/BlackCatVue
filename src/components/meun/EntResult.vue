@@ -71,7 +71,8 @@
                   props: {
                     type: 'primary',
                     size: 'small',
-                    shape: "circle"
+                    shape: "circle",
+                    class:'123123'
                   },
                   style: {
                     marginRight: '5px',
