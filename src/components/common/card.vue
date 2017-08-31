@@ -20,7 +20,7 @@
 <style scoped lang="less" rel="stylesheet/less">
   .card{
     display: inline-block;
-    width: 200px;
+    width: 180px;
     height: 100px;
     border: 1px solid #000;
     border-radius:2px;

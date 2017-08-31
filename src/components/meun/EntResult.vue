@@ -40,7 +40,6 @@
               const address = params.row.name;
               const keyword =this.keyword;
               const reg =new RegExp("("+keyword+")");
-              console.log(reg);
               const splitArr = address.split(reg);
               const nodes = splitArr.map((currentValue) => {
                 if (currentValue == this.keyword) {

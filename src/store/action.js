@@ -13,5 +13,8 @@ export default {
   SearchCode:({commit})=>{
     commit(types.Search_Code)
   },
+  SelectTime:({commit})=>{
+    commit(types.Select_Time)
+  },
 
 }
