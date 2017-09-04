@@ -96,6 +96,7 @@ const state = {
     entcode: '',
     time: ''
   },
+  current:1,
   option: option,
   enttable: [],
   t: {
@@ -131,6 +132,10 @@ const userCheck = function () {
   })
 };
 const mutations = {
+  se(state,val){
+    state.current=val;
+    console.log('state.current='+state.current);
+  },
   [types.LOGIN_CHECK](state){
     userCheck();
   },
@@ -162,6 +167,13 @@ const mutations = {
       return
     }
     Router.push({path: '/home/entresult'});
+  },
+  [types.Ent_Hold](state){
+    axios.get(location.origin + '/static/data/enttable.json').then(function (res) {
+      state.enttable = res.data;
+    }).catch(function (err) {
+      console.log(err);
+    })
   },
   [types.Select_Time](state){
     if (state.search.time == 1) {
@@ -216,6 +228,9 @@ const getters = {
   t: (state) => {
     return state.t
   },
+  current:(state)=>{
+    return state.current
+  }
 };
 export default {
   state,

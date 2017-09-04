@@ -16,5 +16,8 @@ export default {
   SelectTime:({commit})=>{
     commit(types.Select_Time)
   },
+  EntHold:({commit})=>{
+    commit(types.Ent_Hold)
+  },
 
 }
