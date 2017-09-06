@@ -65,7 +65,7 @@
           </div>
           <div>
             <Icon type="android-person" size="16"></Icon>
-            <span>{{formInline.name}}</span>
+            <span>{{logininfo.name}}</span>
 
           </div>
           <div></div>
@@ -98,7 +98,7 @@
     },
     computed: mapGetters(
       [
-        'formInline'
+        'logininfo'
       ]
     ),
   }

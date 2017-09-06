@@ -90,7 +90,7 @@ const option = {
 
 const vue = new Vue();
 const state = {
-  formInline: JSON.parse(localStorage.getItem('user')) || {},
+  logininfo: JSON.parse(localStorage.getItem('user')) || {name:'',password:''},
   search: {
     entname: '',
     entcode: '',
@@ -110,18 +110,16 @@ const state = {
 
 const userCheck = function () {
   console.log('login ... ');
-  let flag = false;
   axios.get(location.origin + '/static/data/app.json').then(function (res) {
     let user = res.data.user;
-    if (user.name == state.formInline.name && user.password == state.formInline.password) {
+    if (user.name == state.logininfo.name && user.password == state.logininfo.password) {
       vue.$Message.config({
         top: 50,
         duration: 3,
       });
       vue.$Message.success('登录成功!');
       console.log(' login success');
-      localStorage.setItem('user', JSON.stringify(state.formInline));
-      flag = true;
+      localStorage.setItem('user', JSON.stringify(state.logininfo));
       Router.push({path: '/home/entlist'});
     } else {
       vue.$Message.error('登录失败!');
@@ -140,7 +138,7 @@ const mutations = {
     userCheck();
   },
   [types.Read_Local](state){
-    if (state.formInline) {
+    if (state.logininfo.name) {
       userCheck()
     } else {
       Router.push({path: '/login'});
@@ -213,8 +211,8 @@ const mutations = {
 
 };
 const getters = {
-  formInline: (state) => {
-    return state.formInline
+  logininfo: (state) => {
+    return state.logininfo
   },
   search: (state) => {
     return state.search
