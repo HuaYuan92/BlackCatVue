@@ -19,5 +19,11 @@ export default {
   EntHold:({commit})=>{
     commit(types.Ent_Hold)
   },
+  SearchTwo:({commit})=>{
+    commit(types.Search_Two)
+  },
+  SearchThree:({commit})=>{
+    commit(types.Search_Three)
+  }
 
 }

@@ -14,7 +14,7 @@ const option = {
   legend: {
     data: ['总查询次数', '查询命中数'],
     right: '4%',
-    itemGap:30
+    itemGap: 30
   },
   grid: {
     left: '3%',
@@ -25,36 +25,36 @@ const option = {
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    axisLine:{
-      show:false
+    axisLine: {
+      show: false
     },
-    axisTick:{
-      show:false
+    axisTick: {
+      show: false
     },
-    axisLabel:{
-      color:'#9094a4'
+    axisLabel: {
+      color: '#9094a4'
     },
     data: ['17-08', '17-09', '17-10', '17-11', '17-12', '18-01', '18-02', '18-03', '18-04', '18-05', '18-06', '18-07']
   },
   yAxis: {
     type: 'value',
-    axisLine:{
-      show:false
+    axisLine: {
+      show: false
     },
-    axisTick:{
-      show:false
+    axisTick: {
+      show: false
     },
-    axisLabel:{
-      color:'#9094a4'
+    axisLabel: {
+      color: '#9094a4'
     },
   },
-  color:['#b800a8','#5f96ff', ],
+  color: ['#b800a8', '#5f96ff',],
   series: [
     {
       name: '查询命中数',
       type: 'line',
-      smooth:true,
-      symbolSize:12,
+      smooth: true,
+      symbolSize: 12,
       lineStyle: {
         normal: {
           width: 5,
@@ -70,8 +70,8 @@ const option = {
     {
       name: '总查询次数',
       type: 'line',
-      smooth:true,
-      symbolSize:12,
+      smooth: true,
+      symbolSize: 12,
       lineStyle: {
         normal: {
           width: 5,
@@ -90,13 +90,15 @@ const option = {
 
 const vue = new Vue();
 const state = {
-  logininfo: JSON.parse(localStorage.getItem('user')) || {name:'',password:''},
+  logininfo: JSON.parse(localStorage.getItem('user')) || {name: '', password: ''},
   search: {
-    entname: '',
-    entcode: '',
+    keyword: '',
+    personname: '',
+    personcord: '',
+    personphone: '',
     time: ''
   },
-  current:1,
+  current: 1,
   option: option,
   enttable: [],
   t: {
@@ -129,11 +131,29 @@ const userCheck = function () {
     console.log(err);
   })
 };
+const personSearch = function (num) {
+  console.log('serch person ing ... ');
+
+  if (num == 'two') {
+    if (!!state.search.personname && !!state.search.personcord) {
+      console.log('two.serch');
+      return
+    }
+  } else if (num == 'three') {
+    if (state.search.personname && state.search.personcord && state.search.personphone) {
+      console.log('three.serch');
+      return
+    }
+
+  }
+  vue.$Message.error('请补全搜索信息!');
+};
 const mutations = {
-  se(state,val){
-    state.current=val;
-    console.log('state.current='+state.current);
+  se(state, val){
+    state.current = val;
+    console.log('state.current=' + state.current);
   },
+  // login
   [types.LOGIN_CHECK](state){
     userCheck();
   },
@@ -145,8 +165,9 @@ const mutations = {
 
     }
   },
+  // entlist
   [types.Search_Name](state){
-    if (!state.search.entname) {
+    if (!state.search.keyword) {
       vue.$Message.error('请输入公司名称 ');
       return
     }
@@ -160,12 +181,20 @@ const mutations = {
 
   },
   [types.Search_Code](state){
-    if (!state.search.entcode) {
+    if (!state.search.keyword) {
       vue.$Message.error('请输入公司代码 ');
       return
     }
     Router.push({path: '/home/entresult'});
   },
+  // personlist
+  [types.Search_Two](state){
+    personSearch('two');
+  },
+  [types.Search_Three](state){
+    personSearch('three')
+  },
+
   [types.Ent_Hold](state){
     axios.get(location.origin + '/static/data/enttable.json').then(function (res) {
       state.enttable = res.data;
@@ -226,7 +255,7 @@ const getters = {
   t: (state) => {
     return state.t
   },
-  current:(state)=>{
+  current: (state) => {
     return state.current
   }
 };
