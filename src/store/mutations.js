@@ -101,9 +101,25 @@ const state = {
   current: 1,
   option: option,
   enttable: [],
-  entresult: {},
+  entresult: {
+    show: true,
+    sum: {
+      name: '',
+      code: '',
+      num: ''
+    },
+    detail: {}
+  },
   persontable: [],
-  personresult: {},
+  personresult: {
+    show: true,
+    sum: {
+      name: '',
+      code: '',
+      num: ''
+    },
+    detail: {}
+  },
   t: {
     num0: '1384',
     num1: '684',
@@ -137,7 +153,9 @@ const userCheck = function () {
 const personSearch = function (num) {
   console.log('serch person ing ... ');
   let params;
+  let url;
   if (num == 'two') {
+    url = '/static/data/entresult.json';
     if (!state.search.personname || !state.search.personcord) {
       vue.$Message.error('请补全搜索信息!');
       return
@@ -147,6 +165,7 @@ const personSearch = function (num) {
       return
     }
   } else if (num == 'three') {
+    url = '/static/data/null.json';
     if (!state.search.personname || !state.search.personcord || !state.search.personphone) {
       vue.$Message.error('请补全搜索信息!');
       return
@@ -162,31 +181,53 @@ const personSearch = function (num) {
 
   }
   console.log('search person axios ing .......');
-  axios.get('/static/data/enttable.json',
-    // {
-    //   name:state.search.personname,
-    //   cord:state.search.personcord,
-    //   phone:state.search.personphone
-    // }
-  ).then(function (res) {
-    state.persontable = res.data;
+  axios.get(url).then(function (res) {
+    console.log(res.data);
+    let data = res.data;
+    if (data) {
+      state.personresult.show = true;
+      state.personresult.sum.name = data.name;
+      state.personresult.sum.code = data.code;
+      state.personresult.sum.num = data.num;
+      state.personresult.detail = data.detail;
+    } else {
+      state.personresult.show = false;
+
+    }
   }).catch(function (err) {
+    state.personresult.show = false;
     console.log(err);
   });
   console.log('search person axios end .......');
   Router.push({path: '/home/personresult'});
 };
 const entSearch = function (type) {
+  let url;
   if (type == 'name') {
-
+    url = '/static/data/entresult.json';
   } else if (type == 'code') {
+    url = '/static/data/null.json';
 
   }
-  axios.get('/static/data/enttable.json').then(function (res) {
-    state.enttable = res.data;
+  axios.get(url).then(function (res) {
+    console.log(res.data);
+    let data = res.data;
+    if (data) {
+      state.entresult.show = true;
+      state.entresult.sum.name = data.name;
+      state.entresult.sum.code = data.code;
+      state.entresult.sum.num = data.num;
+      state.entresult.detail = data.detail;
+    } else {
+      state.entresult.show = false;
+
+    }
+
   }).catch(function (err) {
+    state.entresult.show = false;
     console.log(err);
-  })
+  });
+  Router.push({path: '/home/entresult'});
 };
 const mutations = {
   se(state, val){
@@ -211,7 +252,6 @@ const mutations = {
       vue.$Message.error('请输入公司名称 ');
       return
     }
-    Router.push({path: '/home/entresult'});
     entSearch('name');
   },
   [types.Search_Code](state){
@@ -220,7 +260,6 @@ const mutations = {
       return
     }
     entSearch('code');
-    Router.push({path: '/home/entresult'});
   },
   // personlist
   [types.Search_Two](state){
@@ -229,7 +268,28 @@ const mutations = {
   [types.Search_Three](state){
     personSearch('three')
   },
+  hold(state,val){
+    let url;
+    if(val=='ent'){
+      url = '/static/data/entresult.json';
+    }else{
+      url = '/static/data/entresult.json';
+    }
+    axios.get(url).then(function (res) {
+      console.log(res.data);
+      let data = res.data;
+      if (data) {
+        vue.$Message.success('保存成功');
+      } else {
+        vue.$Message.error('保存失败');
+      }
+    }).catch(function (err) {
+      console.log(err);
+      vue.$Message.error('保存失败');
+    });
 
+
+  },
   [types.Ent_Hold](state){
     axios.get('/static/data/enttable.json').then(function (res) {
       state.enttable = res.data;

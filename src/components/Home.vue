@@ -112,6 +112,7 @@
   .menu {
     height: 80px;
     width: 100%;
+    min-width:1400px;
     padding-top: 8px;
     position: fixed;
     z-index: 3;
@@ -210,6 +211,7 @@
   .menu_datail {
     height: 80px;
     width: 100%;
+    min-width:1400px;
     padding-top: 8px;
     position: fixed;
     background-color: #fff;

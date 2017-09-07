@@ -9,6 +9,8 @@ import EntResult from '@/components/meun/EntResult'
 import InfoList from '@/components/info/InfoList'
 import PersonHold from '@/components/hold/PersonHold'
 import EntHold from '@/components/hold/EntHold'
+import EntDetail from '@/components/meun/EntDetail'
+import PersonDetail from '@/components/meun/PersonDetail'
 
 Vue.use(Router)
 
@@ -33,12 +35,20 @@ export default new Router({
           component: PersonResult,
         },
         {
+          path: 'persondetail',
+          component: PersonDetail,
+        },
+        {
           path: 'entlist',
           component: EntList,
         },
         {
           path: 'entresult',
           component: EntResult,
+        },
+        {
+          path: 'entdetail',
+          component: EntDetail,
         },
         {
           path: 'infolist',

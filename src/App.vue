@@ -19,7 +19,7 @@
   @import "../node_modules/iview/dist/styles/iview.css";
 
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: PingFangSC-Regular,'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -35,6 +35,7 @@
   html {
     text-align: center;
     height: 100%;
+
   }
 
   body {
@@ -42,5 +43,8 @@
     min-width: 1400px;
     height: 100%;
     min-height:740px;
+  }
+  .ivu-poptip-body {
+    text-align: left !important;
   }
 </style>
