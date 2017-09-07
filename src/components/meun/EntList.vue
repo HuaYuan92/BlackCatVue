@@ -71,6 +71,7 @@
         font-size: 48px;
         color: #ffffff;
         text-align: center;
+        font-weight:300;
       }
 
     }
@@ -82,7 +83,7 @@
       border-radius: 4px;
       width: 1100px;
       height: 60px;
-      margin: 80px auto;
+      margin: 64px auto;
       padding-top: 10px;
       .select {
         width: 150px;

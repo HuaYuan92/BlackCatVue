@@ -101,6 +101,9 @@ const state = {
   current: 1,
   option: option,
   enttable: [],
+  entresult: {},
+  persontable: [],
+  personresult: {},
   t: {
     num0: '1384',
     num1: '684',
@@ -133,20 +136,57 @@ const userCheck = function () {
 };
 const personSearch = function (num) {
   console.log('serch person ing ... ');
-
+  let params;
   if (num == 'two') {
-    if (!!state.search.personname && !!state.search.personcord) {
-      console.log('two.serch');
+    if (!state.search.personname || !state.search.personcord) {
+      vue.$Message.error('请补全搜索信息!');
+      return
+    }
+    if (state.search.personcord && state.search.personcord.length != 18) {
+      vue.$Message.error('身份证位数错误');
       return
     }
   } else if (num == 'three') {
-    if (state.search.personname && state.search.personcord && state.search.personphone) {
-      console.log('three.serch');
+    if (!state.search.personname || !state.search.personcord || !state.search.personphone) {
+      vue.$Message.error('请补全搜索信息!');
+      return
+    }
+    if (state.search.personcord && state.search.personcord.length != 18) {
+      vue.$Message.error('身份证位数错误');
+      return
+    }
+    if (state.search.personphone && state.search.personphone.length != 11) {
+      vue.$Message.error('手机号应为11位');
       return
     }
 
   }
-  vue.$Message.error('请补全搜索信息!');
+  console.log('search person axios ing .......');
+  axios.get('/static/data/enttable.json',
+    // {
+    //   name:state.search.personname,
+    //   cord:state.search.personcord,
+    //   phone:state.search.personphone
+    // }
+  ).then(function (res) {
+    state.persontable = res.data;
+  }).catch(function (err) {
+    console.log(err);
+  });
+  console.log('search person axios end .......');
+  Router.push({path: '/home/personresult'});
+};
+const entSearch = function (type) {
+  if (type == 'name') {
+
+  } else if (type == 'code') {
+
+  }
+  axios.get('/static/data/enttable.json').then(function (res) {
+    state.enttable = res.data;
+  }).catch(function (err) {
+    console.log(err);
+  })
 };
 const mutations = {
   se(state, val){
@@ -172,19 +212,14 @@ const mutations = {
       return
     }
     Router.push({path: '/home/entresult'});
-
-    axios.get(location.origin + '/static/data/enttable.json').then(function (res) {
-      state.enttable = res.data;
-    }).catch(function (err) {
-      console.log(err);
-    })
-
+    entSearch('name');
   },
   [types.Search_Code](state){
     if (!state.search.keyword) {
       vue.$Message.error('请输入公司代码 ');
       return
     }
+    entSearch('code');
     Router.push({path: '/home/entresult'});
   },
   // personlist
@@ -196,7 +231,7 @@ const mutations = {
   },
 
   [types.Ent_Hold](state){
-    axios.get(location.origin + '/static/data/enttable.json').then(function (res) {
+    axios.get('/static/data/enttable.json').then(function (res) {
       state.enttable = res.data;
     }).catch(function (err) {
       console.log(err);
@@ -249,6 +284,15 @@ const getters = {
   enttable: (state) => {
     return state.enttable
   },
+  entresult: (state) => {
+    return state.entresult
+  },
+  persontable: (state) => {
+    return state.persontable
+  },
+  personresult: (state) => {
+    return state.personresult
+  },
   option: (state) => {
     return state.option
   },
@@ -257,7 +301,8 @@ const getters = {
   },
   current: (state) => {
     return state.current
-  }
+  },
+
 };
 export default {
   state,

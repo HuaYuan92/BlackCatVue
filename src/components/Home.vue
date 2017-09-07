@@ -52,7 +52,7 @@
         </Submenu>
       </Menu>
       <div class="user_div">
-        <span @click="quit">{{logininfo.name}},退出</span>
+        <span @click="quit">{{logininfo.name}}, &nbsp &nbsp 退出</span>
 
       </div>
     </div>
@@ -113,7 +113,8 @@
     height: 80px;
     width: 100%;
     padding-top: 8px;
-    position: absolute;
+    position: fixed;
+    z-index: 3;
     background-image: url('../assets/image/big-bg.png');
     background-size: cover;
     background-position: top;
@@ -210,7 +211,9 @@
     height: 80px;
     width: 100%;
     padding-top: 8px;
-    position: absolute;
+    position: fixed;
+    background-color: #fff;
+    z-index: 3;
     .logo_div {
       width: 30%;
       min-width: 300px;

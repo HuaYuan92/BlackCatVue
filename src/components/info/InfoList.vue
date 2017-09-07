@@ -1,6 +1,5 @@
 <template>
   <div class="box">
-    <div class="title"> 查询信息统计</div>
     <div class="content_box">
       <div class="tab">
         <span class="title"> 黑猫察使用数据统计</span>
@@ -92,8 +91,8 @@
       line-height: 36px;
     }
     .content_box {
-      width: 96%;
-      height: 90%;
+      width: 100%;
+      height: 100%;
       background-color: #fff;
       margin: 0 auto;
       .box_card {

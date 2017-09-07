@@ -20,7 +20,7 @@
   .card {
     display: inline-block;
     width: 14%;
-    height: 20%;
+    height: 30%;
     border-radius: 5px;
     color: #fff;
     .title {

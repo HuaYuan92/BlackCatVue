@@ -11,8 +11,8 @@
         </Select>
         <div class="ipt_box">
           <Input v-model="search.personname" placeholder="输入姓名" size="large" key="0" class="ipt"> </Input>
-          <Input v-model="search.personcord" placeholder="输入身份证号"  size="large" key ='1' class="ipt"> </Input>
-          <Input v-model="search.personphone" placeholder="输入手机号"  size="large" key ='2' class="ipt" v-show="phone"> </Input>
+          <Input v-model="search.personcord" placeholder="输入身份证号"  size="large" key ='1' :maxlength='18' class="ipt"> </Input>
+          <Input v-model="search.personphone" placeholder="输入手机号"  size="large" key ='2' :maxlength='11' class="ipt" v-show="phone"> </Input>
         </div>
 
         <Button type="primary" size="large" @click="searchipt" class="button">
@@ -77,6 +77,8 @@
         font-size: 48px;
         color: #ffffff;
         text-align: center;
+        font-weight:300;
+
       }
 
     }
@@ -88,7 +90,7 @@
       border-radius: 4px;
       width: 1100px;
       height: 60px;
-      margin: 80px auto;
+      margin: 64px auto;
       padding-top: 10px;
       .select {
         width: 150px;
