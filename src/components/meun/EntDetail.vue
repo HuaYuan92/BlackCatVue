@@ -195,7 +195,6 @@
     background: #ffffff;
     box-shadow: 0px 8px 8px 0px rgba(46, 119, 242, 0.07);
     height: 150px;
-    border-top: 1px solid #e1e5e7;
     .box_img {
       .img {
         width: 900px;

@@ -3,7 +3,7 @@
     <div class="content_box">
       <div class="tab">
         <span class="title"> 黑猫察使用数据统计</span>
-        <Select style="width:200px" size="small" v-model="search.time" @on-change="select1">
+        <Select style="width:200px;margin-top: -3px;" size="large" v-model="search.time" @on-change="select1">
           <Option v-for="item in select" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
@@ -26,6 +26,9 @@
   let echarts = require('echarts');
   export default {
     name: 'infolist',
+    beforeMount:function () {
+      this.$store.dispatch('SelectTime');
+    },
     mounted: function () {
       var myChart = echarts.init(document.getElementById('echarts'));
       myChart.setOption(this.option);
@@ -63,13 +66,7 @@
       ]
     ),
     methods: {
-      searchname(){
-        this.$store.dispatch('SearchName');
-      },
-      searchcode(){
-        this.$store.dispatch('SearchCode');
-      },
-      select1(val){
+      select1(){
         this.$store.dispatch('SelectTime');
 
       }
@@ -80,25 +77,25 @@
 </script>
 <style scoped lang="less" rel="stylesheet/less">
   .box {
-    width: 100%;
-    height: 100%;
+    width: 1200px;
+    margin: 0 auto;
     background-color: #f2f2f2;
     .title {
       text-align: left;
-      padding-left: 20px;
       font-size: 16px;
-      height: 36px;
-      line-height: 36px;
+      height: 56px;
+      line-height: 56px;
+      color:#353842;
     }
     .content_box {
       width: 100%;
-      height: 100%;
+      min-height: 800px;
       background-color: #fff;
-      margin: 0 auto;
+      padding-bottom: 40px;
       .box_card {
         display: flex;
-        justify-content: space-around;
-        padding: 20px 20px 0;
+        justify-content: space-between;
+        padding: 20px ;
         .card0 {
           background-image: url("../../assets/image/card0.png");
         }
@@ -121,9 +118,10 @@
         }
       }
       #echarts {
-        width: 98%;
-        height: 70%;
-        margin: 20px auto;
+        width: 1240px;
+        height: 500px;
+        margin: 20px 0;
+        margin-left:-20px;
       }
     }
   }
@@ -137,6 +135,9 @@
       font-weight: 500;
       padding-right: 20px
     }
+  }
+  .ivu-select-item-selected, .ivu-select-item-selected:hover{
+    background: rgba(165, 205, 255, 0.9);
   }
 
 

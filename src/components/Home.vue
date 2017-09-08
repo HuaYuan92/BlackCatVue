@@ -216,6 +216,7 @@
     position: fixed;
     background-color: #fff;
     z-index: 3;
+    border-bottom: 1px solid #e1e5e7;
     .logo_div {
       width: 30%;
       min-width: 300px;

@@ -65,7 +65,7 @@ const option = {
 
         }
       },
-      data: [100, 200, 300, 400, 500, 230, 210, 33, 123, 131, 44, 55]
+      data: []
     },
     {
       name: '总查询次数',
@@ -81,7 +81,7 @@ const option = {
           shadowOffset: 16
         }
       },
-      data: [500, 400, 300, 234, 290, 330, 310, 485, 888, 234, 667, 324]
+      data: []
     },
 
 
@@ -96,7 +96,7 @@ const state = {
     personname: '',
     personcord: '',
     personphone: '',
-    time: ''
+    time: '1'
   },
   current: 1,
   option: option,
@@ -121,11 +121,11 @@ const state = {
     detail: {}
   },
   t: {
-    num0: '1384',
-    num1: '684',
-    num2: '2451',
-    num3: '1131',
-    num4: '1815',
+    num0: "",
+    num1: "",
+    num2: "",
+    num3: "",
+    num4: ""
   }
 };
 
@@ -268,11 +268,11 @@ const mutations = {
   [types.Search_Three](state){
     personSearch('three')
   },
-  hold(state,val){
+  hold(state, val){
     let url;
-    if(val=='ent'){
+    if (val == 'ent') {
       url = '/static/data/entresult.json';
-    }else{
+    } else {
       url = '/static/data/entresult.json';
     }
     axios.get(url).then(function (res) {
@@ -297,40 +297,33 @@ const mutations = {
       console.log(err);
     })
   },
+  // info
   [types.Select_Time](state){
+    let url = '/static/data/info.json';
     if (state.search.time == 1) {
-      state.option.series[0].data = [120, 132, 101, 134, 90, 230, 210, 33, 123, 131, 44, 55];
-      state.option.series[1].data = [220, 182, 191, 234, 290, 330, 310, 485, 888, 234, 667, 324];
-      state.t = {
-        num0: '1384',
-        num1: '684',
-        num2: '2451',
-        num3: '1131',
-        num4: '1815',
-      }
-    } else if (state.search.time == 6) {
-      state.option.series[0].data = [33, 44, 55, 66, 77, 44, 55, 23, 44, 245, 54, 23];
-      state.option.series[1].data = [12, 55, 123, 45, 17, 65, 12, 67, 38, 79, 53, 44];
-      state.t = {
-        num0: '2314',
-        num1: '124',
-        num2: '12312355',
-        num3: '131313',
-        num4: '678',
-      }
 
+    } else if (state.search.time == 6) {
+url='/static/data/infot.json'
     } else {
-      state.option.series[0].data = [333, 424, 525, 676, 767, 494, 535, 237, 434, 245, 534, 223];
-      state.option.series[1].data = [142, 555, 1323, 425, 147, 645, 412, 627, 338, 796, 543, 744];
-      state.t = {
-        num0: '13213',
-        num1: '68456',
-        num2: '77',
-        num3: '678',
-        num4: '98',
-      }
 
     }
+
+    axios.get(url).then(function (res) {
+      console.log(res.data);
+      let data = res.data;
+      state.t.num0=data.t.num0;
+      state.t.num1=data.t.num1;
+      state.t.num2=data.t.num2;
+      state.t.num3=data.t.num3;
+      state.t.num4=data.t.num4;
+      // 命中数
+      state.option.series[0].data = [120, 132, 101, 134, 90, 230, 210, 33, 123, 131, 44, 55];
+      // 总次数
+      state.option.series[1].data = [220, 182, 191, 234, 290, 330, 310, 485, 888, 234, 667, 324];
+
+    }).catch(function (err) {
+      console.log(err);
+    });
   },
 
 };

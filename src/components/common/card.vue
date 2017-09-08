@@ -19,19 +19,22 @@
 <style scoped lang="less" rel="stylesheet/less">
   .card {
     display: inline-block;
-    width: 14%;
-    height: 30%;
+    width: 220px;
+    height: 240px;
     border-radius: 5px;
     color: #fff;
     .title {
-      width: 100%;
-      height: 32px;
-
-      line-height: 32px;
       font-size: 16px;
+      color:#ffffff;
+      text-align:left;
+      padding-top: 32px;
+      padding-left: 24px;
     }
     .num {
-      font-size: 34px
+      font-size: 34px;
+      text-align:left;
+      margin-top: 36px;
+      padding-left: 24px;
     }
 
   }
