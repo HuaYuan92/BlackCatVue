@@ -34,7 +34,9 @@
       font-size: 34px;
       text-align:left;
       margin-top: 36px;
+      width: 180px;
       padding-left: 24px;
+      word-wrap:break-word
     }
 
   }
