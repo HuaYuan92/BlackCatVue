@@ -24,11 +24,11 @@
           黑猫判
         </div>
         <div class="item_content">
-          <i-circle :percent="80" stroke-color="#5f96ff">
-            <span class="demo-i-circle-inner" style="font-size:24px">-84</span>
+          <i-circle :percent="100+Number(entresult.detail.num)" stroke-color="#5f96ff">
+            <span class="demo-i-circle-inner" style="font-size:24px">{{entresult.detail.num}}</span>
           </i-circle>
           <div class="content_sum">
-            经查，该企业存在不良信息，其黑猫分为 <span>-78</span> 分。
+            经查，该企业存在不良信息，其黑猫分为 <span>{{entresult.detail.num}}</span> 分。
           </div>
 
 
@@ -40,6 +40,59 @@
           基础信息
         </div>
         <div class="item_content">
+          <div class="item_content_item">
+            <div class="item_key">
+              企业名称
+            </div>
+            <div class="item_val">
+              {{entresult.sum.name}}
+            </div>
+          </div>
+          <div class="item_content_item " v-if="!!entresult.sum.code">
+            <div class="item_key item_cord">
+              统一社会
+              信用代码
+            </div>
+            <div class="item_val">
+              {{entresult.sum.code?entresult.sum.code:"暂无信息"}}
+            </div>
+          </div>
+          <div class="item_content_item" v-if="!!entresult.detail.code2">
+            <div class="item_key item_cord">
+              组织机构
+              代码
+            </div>
+            <div class="item_val">
+              {{entresult.detail.code2?entresult.detail.code2:"暂无信息"}}
+            </div>
+          </div>
+          <div class="item_content_item" v-if="!!entresult.detail.legalman">
+            <div class="item_key">
+              法人代表
+            </div>
+            <div class="item_val">
+              {{entresult.detail.legalman?entresult.detail.legalman:"暂无信息"}}
+            </div>
+          </div>
+          <div class="item_content_item" v-if="!!entresult.detail.address">
+            <div class="item_key">
+              注册地址
+            </div>
+            <div class="item_val">
+              {{entresult.detail.address?entresult.detail.address:"暂无信息"}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="content_item item2">
+        <div class="item_title">
+          失信详情
+        </div>
+        <div class="item_content">
+          <div class="item_content_title title0">
+            发展改革委/高法受惩黑名单
+          </div>
           <div class="item_content_item">
             <div class="item_key">
               企业名称
@@ -73,14 +126,45 @@
               北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
             </div>
           </div>
-        </div>
-
-      </div>
-      <div class="content_item item2">
-        <div class="item_title">
-          失信详情
+          <div class="hr"></div>
         </div>
         <div class="item_content">
+          <div class="item_content_title title1">
+            保监会行政处罚
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              企业名称
+            </div>
+            <div class="item_val">
+              辉山乳业有限责任公司北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
+          <div class="item_content_item ">
+            <div class="item_key item_cord">
+              统一社会
+              信用代码
+            </div>
+            <div class="item_val">
+              520490000049509
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              法人代表
+            </div>
+            <div class="item_val">
+              张伟
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              注册地址
+            </div>
+            <div class="item_val">
+              北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
         </div>
 
       </div>
@@ -169,6 +253,7 @@
       }
       .item2 {
         background-image: url('../../assets/image/icon2.png');
+        margin-bottom: 40px;
       }
       .content_item {
         background-color: #ffffff;
@@ -202,34 +287,68 @@
             margin-bottom: 16px;
             .item_key {
               display: inline-block;
-              font-size:16px;
-              color:#b4b8c7;
-              line-height:46px;
+              font-size: 16px;
+              color: #b4b8c7;
+              line-height: 46px;
               width: 80px;
               min-height: 46px;
             }
-            .item_cord{
+            .item_cord {
               min-height: 46px;
               line-height: 22px;
             }
-            .item_val{
+            .item_val {
               display: inline-block;
-              font-size:16px;
-              color:#6a6f83;
+              font-size: 16px;
+              color: #6a6f83;
               vertical-align: top;
-              background:#fafafa;
-              border-radius:2px;
-              min-width:400px;
+              background: #fafafa;
+              border-radius: 2px;
+              min-width: 400px;
               max-width: 700px;
-              min-height:46px;
+              min-height: 46px;
               line-height: 32px;
               margin-left: 26px;
               padding-left: 24px;
               padding-right: 24px;
-              padding-top:6px;
+              padding-top: 6px;
             }
 
           }
+          .title0 {
+            background-image: url('../../assets/image/tab0.png');
+          }
+          .title1 {
+            background-image: url('../../assets/image/tab1.png');
+          }
+          .title2 {
+            background-image: url('../../assets/image/tab2.png');
+          }
+          .title3 {
+            background-image: url('../../assets/image/tab3.png');
+          }
+          .title4 {
+            background-image: url('../../assets/image/tab4.png');
+          }
+          .title5 {
+            background-image: url('../../assets/image/tab5.png');
+          }
+
+          .item_content_title {
+            background-repeat: no-repeat;
+            background-position: 2px 2px;
+            font-size: 16px;
+            color: #353842;
+            line-height: 24px;
+            height: 40px;
+            padding-left: 36px;
+          }
+          .hr {
+            width: 840px;
+            border-bottom: 1px dashed #dddddd;
+            margin: 0 auto;
+          }
+
         }
       }
 

@@ -6,10 +6,10 @@
         </div>
         <div class="img_text">
           <div class="name">
-            {{entresult.sum.name}}
+            {{personresult.sum.name}}
           </div>
           <div class="cord">
-            身份证号：{{entresult.sum.code}}
+            身份证号：{{personresult.sum.code}}
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
               真实姓名
             </div>
             <div class="item_val">
-              庞宗红
+              {{personresult.sum.name}}
             </div>
           </div>
           <div class="item_content_item">
@@ -37,7 +37,7 @@
               身份证号
             </div>
             <div class="item_val">
-              110100199807261249
+              {{personresult.sum.code}}
             </div>
           </div>
         </div>
@@ -48,6 +48,81 @@
           失信详情
         </div>
         <div class="item_content">
+          <div class="item_content_title title0">
+            发展改革委/高法受惩黑名单
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              企业名称
+            </div>
+            <div class="item_val">
+              辉山乳业有限责任公司北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
+          <div class="item_content_item ">
+            <div class="item_key item_cord">
+              统一社会
+              信用代码
+            </div>
+            <div class="item_val">
+              520490000049509
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              法人代表
+            </div>
+            <div class="item_val">
+              张伟
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              注册地址
+            </div>
+            <div class="item_val">
+              北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
+          <div class="hr"></div>
+        </div>
+        <div class="item_content">
+          <div class="item_content_title title1">
+            保监会行政处罚
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              企业名称
+            </div>
+            <div class="item_val">
+              辉山乳业有限责任公司北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
+          <div class="item_content_item ">
+            <div class="item_key item_cord">
+              统一社会
+              信用代码
+            </div>
+            <div class="item_val">
+              520490000049509
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              法人代表
+            </div>
+            <div class="item_val">
+              张伟
+            </div>
+          </div>
+          <div class="item_content_item">
+            <div class="item_key">
+              注册地址
+            </div>
+            <div class="item_val">
+              北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101北京市海淀区五棵松八号院13号楼101
+            </div>
+          </div>
         </div>
 
       </div>
@@ -65,7 +140,7 @@
     },
     computed: mapGetters(
       [
-        'entresult'
+        'personresult'
       ]
     ),
     methods: {},
@@ -88,7 +163,7 @@
           display: inline-block;
           width: 108px;
           height: 150px;
-          background: url('../../assets/image/head_person.png') no-repeat center;
+          background: url('../../assets/image/head_company.png') no-repeat center;
         }
         .img_text {
           display: inline-block;
@@ -136,6 +211,7 @@
       }
       .item2 {
         background-image: url('../../assets/image/icon2.png');
+        margin-bottom: 40px;
       }
       .content_item {
         background-color: #ffffff;
@@ -197,6 +273,40 @@
             }
 
           }
+          .title0 {
+            background-image: url('../../assets/image/tab0.png');
+          }
+          .title1 {
+            background-image: url('../../assets/image/tab1.png');
+          }
+          .title2 {
+            background-image: url('../../assets/image/tab2.png');
+          }
+          .title3 {
+            background-image: url('../../assets/image/tab3.png');
+          }
+          .title4 {
+            background-image: url('../../assets/image/tab4.png');
+          }
+          .title5 {
+            background-image: url('../../assets/image/tab5.png');
+          }
+
+          .item_content_title {
+            background-repeat: no-repeat;
+            background-position: 2px 2px;
+            font-size: 16px;
+            color: #353842;
+            line-height: 24px;
+            height: 40px;
+            padding-left: 36px;
+          }
+          .hr {
+            width: 840px;
+            border-bottom: 1px dashed #dddddd;
+            margin: 0 auto;
+          }
+
         }
       }
 
@@ -204,3 +314,4 @@
 
   }
 </style>
+

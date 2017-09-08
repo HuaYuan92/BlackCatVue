@@ -155,7 +155,7 @@ const personSearch = function (num) {
   let params;
   let url;
   if (num == 'two') {
-    url = '/static/data/entresult.json';
+    url = '/static/data/personresult.json';
     if (!state.search.personname || !state.search.personcord) {
       vue.$Message.error('请补全搜索信息!');
       return
