@@ -1,12 +1,22 @@
 <template>
   <div class="box">
-    <div class="title">已保存企业名单</div>
-    <div class="content_box">
+    <div class="box_entlist" key="3-1">
       <div class="content_search">
-        <div class="search_name">
-
+        <div class="ipt_box">
+          <Input v-model="enttable.keyword" placeholder="输入关键词" size="large" key="3-1" style="width: 980px;"> </Input>
         </div>
+        <Button type="primary" size="large" @click="holdsearch" class="button">
+          <Icon type="ios-search" size="20" class="icon"></Icon>
+          点击搜索
+        </Button>
       </div>
+    </div>
+    <div class="title">
+      <div>已保存企业黑名单</div>
+      <Button type="ghost" size="large" style="width: 100px;">批量操作</Button>
+      <Button type="ghost" size="large" style="width: 100px;">删除</Button>
+    </div>
+    <div class="content_box">
       <div class="content_table">
         <Modal
           v-model="modal"
@@ -16,10 +26,11 @@
           <p>点击确定后，对话框将在 2秒 后关闭。</p>
         </Modal>
 
-        <Table :columns="columns" :data="enttable" size="small" @on-selection-change="selection"  @on-sort-change="sort"></Table>
+        <Table :columns="columns" :data="enttable.table" size="large" @on-selection-change="selection"
+               @on-sort-change="sort"></Table>
       </div>
       <div class="table_page">
-        <Page :total="122" @on-change="page" show-elevator :current="current"></Page>
+        <Page :total="76" @on-change="page" show-elevator :current="enttable.current"></Page>
       </div>
 
     </div>
@@ -30,14 +41,13 @@
   import {mapGetters} from 'vuex'
   export default {
     name: 'enthold',
-    beforeMount:function () {
-      this.$store.dispatch('EntHold');
+    beforeMount: function () {
+      this.$store.dispatch('HoldFetch');
 
     },
     data: function () {
       return {
-        modal:false,
-        keyword:'',
+        modal: false,
         columns: [
           {
             type: 'selection',
@@ -50,11 +60,11 @@
             align: 'center',
             render: (h, params) => {
               const address = params.row.name;
-              const keyword =this.keyword;
-              const reg =new RegExp("("+keyword+")");
+              const keyword = this.enttable.keyword;
+              const reg = new RegExp("(" + keyword + ")");
               const splitArr = address.split(reg);
               const nodes = splitArr.map((currentValue) => {
-                if (currentValue == this.keyword) {
+                if (currentValue == keyword) {
                   return h('span', {
                     style: {
                       color: 'red'
@@ -83,7 +93,7 @@
                     type: 'primary',
                     size: 'small',
                     shape: "circle",
-                    class:'123123'
+                    class: '123123'
                   },
                   style: {
                     marginRight: '5px',
@@ -92,7 +102,7 @@
                   }
                 }, params.row.address),])
             },
-            sortable:'custom'
+            sortable: 'custom'
           },
           {
             title: '操作',
@@ -134,35 +144,33 @@
     },
     computed: mapGetters(
       [
-        'search',
         'enttable',
-        'current'
       ]
     ),
     methods: {
+      holdsearch(){
+        console.log(13);
+        this.$store.commit('Hold_Search', 'ent');
+      },
       selection(info){
         console.log(info);
-        let modal =this.modal;
-        this.modal=!modal;
+        let modal = this.modal;
+        this.modal = !modal;
         console.log(1);
-
-
       },
       sort(c){
         console.log(c);
       },
       show (index) {
-
-        console.log(this.current);
+        console.log(this.enttable.current);
       },
       remove (index) {
-        this.enttable.splice(index, 1);
+        this.enttable.table.splice(index, 1);
       },
       page(index){
-
-        console.log('index='+index);
-        this.$store.commit('se',index);
-        console.log('this.current='+this.current);
+        console.log('index=' + index);
+        this.$store.commit('se', index);
+        console.log('this.current=' + this.current);
       }
 
     },
@@ -172,19 +180,33 @@
 <style scoped lang="less" rel="stylesheet/less">
   .box {
     width: 100%;
-    height: 100%;
-    background-color: #f2f2f2;
+    background-color: #ffffff;
+    .box_entlist {
+      height: 250px !important;
+      background-position: 0 92%;
+      overflow: hidden;
+      .content_search {
+        margin-top: 110px;
+        .ipt_box {
+          width: 1100px;
+          font-size: 16px;
+          color: #353842;
+        }
+      }
+
+    }
     .title {
+      width: 1200px !important;
+      margin: 20px auto;
       text-align: left;
-      padding-left: 20px;
       font-size: 16px;
-      height: 36px;
-      line-height: 36px;
+      height: 86px;
+      line-height: 46px;
+      color: #353842;
     }
     .content_box {
-      width: 96%;
-      height: 90%;
-      background-color: #fff;
+      width: 1200px;
+      height: 770px;
       margin: 0 auto;
       position: relative;
       .content_search {
@@ -192,17 +214,11 @@
         padding-left: 16px;
         position: relative;
         text-align: left;
-        .search_name {
-          padding-bottom: 8px;
-        }
-        .search_code {
-        }
       }
 
     }
     .content_table {
-      width: 97%;
-      margin: 0 auto;
+      width: 100%;
       margin-top: 20px;
     }
     .table_page {
@@ -215,5 +231,12 @@
     }
   }
 
+  .ivu-table td, .ivu-table th {
+    border: none !important
+  }
+
+  .ivu-table-wrapper {
+    border: none;
+  }
 
 </style>

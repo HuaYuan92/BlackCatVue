@@ -98,9 +98,12 @@ const state = {
     personphone: '',
     time: '1'
   },
-  current: 1,
   option: option,
-  enttable: [],
+  enttable: {
+    keyword: '',
+    current: 1,
+    table: []
+  },
   entresult: {
     show: true,
     sum: {
@@ -110,7 +113,11 @@ const state = {
     },
     detail: {}
   },
-  persontable: [],
+  persontable: {
+    keyword: '',
+    current: 1,
+    table: []
+  },
   personresult: {
     show: true,
     sum: {
@@ -290,20 +297,13 @@ const mutations = {
 
 
   },
-  [types.Ent_Hold](state){
-    axios.get('/static/data/enttable.json').then(function (res) {
-      state.enttable = res.data;
-    }).catch(function (err) {
-      console.log(err);
-    })
-  },
   // info
   [types.Select_Time](state){
     let url = '/static/data/info.json';
     if (state.search.time == 1) {
 
     } else if (state.search.time == 6) {
-url='/static/data/infot.json'
+      url = '/static/data/infot.json'
     } else {
 
     }
@@ -311,11 +311,11 @@ url='/static/data/infot.json'
     axios.get(url).then(function (res) {
       console.log(res.data);
       let data = res.data;
-      state.t.num0=data.t.num0;
-      state.t.num1=data.t.num1;
-      state.t.num2=data.t.num2;
-      state.t.num3=data.t.num3;
-      state.t.num4=data.t.num4;
+      state.t.num0 = data.t.num0;
+      state.t.num1 = data.t.num1;
+      state.t.num2 = data.t.num2;
+      state.t.num3 = data.t.num3;
+      state.t.num4 = data.t.num4;
       // 命中数
       state.option.series[0].data = [120, 132, 101, 134, 90, 230, 210, 33, 123, 131, 44, 55];
       // 总次数
@@ -325,6 +325,43 @@ url='/static/data/infot.json'
       console.log(err);
     });
   },
+  //已保存
+  [types.Hold_Fetch](state){
+    axios.get('/static/data/enttable.json').then(function (res) {
+      state.enttable.table = res.data;
+    }).catch(function (err) {
+      console.log(err);
+    });
+    axios.get('/static/data/persontable.json').then(function (res) {
+      state.persontable.table = res.data;
+    }).catch(function (err) {
+      console.log(err);
+    })
+  },
+  Hold_Search(state, type){
+    let url;
+    console.log(1);
+    if (type == 'ent') {
+      url='/static/data/enttable.json';
+      if(state.enttable.keyword.length==0){
+        vue.$Message.error('请输入查询关键词');
+        return
+      }
+    }else {
+      url='/static/data/enttable.json';
+      if(state.persontable.keyword.length==0){
+        vue.$Message.error('请输入查询关键词');
+        return
+      }
+    }
+    axios.get(url).then(function (res) {
+      state.enttable.table = res.data;
+      console.log(2);
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+
 
 };
 const getters = {
@@ -352,10 +389,6 @@ const getters = {
   t: (state) => {
     return state.t
   },
-  current: (state) => {
-    return state.current
-  },
-
 };
 export default {
   state,

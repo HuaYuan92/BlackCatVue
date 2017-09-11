@@ -16,8 +16,8 @@ export default {
   SelectTime:({commit})=>{
     commit(types.Select_Time)
   },
-  EntHold:({commit})=>{
-    commit(types.Ent_Hold)
+  HoldFetch:({commit})=>{
+    commit(types.Hold_Fetch)
   },
   SearchTwo:({commit})=>{
     commit(types.Search_Two)

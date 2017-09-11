@@ -47,4 +47,8 @@
   .ivu-poptip-body {
     text-align: left !important;
   }
+  .ivu-table:after{
+    background-color: #fff !important;
+  }
+
 </style>

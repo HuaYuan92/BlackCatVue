@@ -115,7 +115,7 @@
     min-width:1400px;
     padding-top: 8px;
     position: fixed;
-    z-index: 3;
+    z-index: 11;
     background-image: url('../assets/image/big-bg.png');
     background-size: cover;
     background-position: top;
@@ -215,7 +215,7 @@
     padding-top: 8px;
     position: fixed;
     background-color: #fff;
-    z-index: 3;
+    z-index: 11;
     border-bottom: 1px solid #e1e5e7;
     .logo_div {
       width: 30%;
