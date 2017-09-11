@@ -206,7 +206,6 @@ const personSearch = function (num) {
     console.log(err);
   });
   console.log('search person axios end .......');
-  Router.push({path: '/home/personresult'});
 };
 const entSearch = function (type) {
   let url;
@@ -227,20 +226,13 @@ const entSearch = function (type) {
       state.entresult.detail = data.detail;
     } else {
       state.entresult.show = false;
-
     }
-
   }).catch(function (err) {
     state.entresult.show = false;
     console.log(err);
   });
-  Router.push({path: '/home/entresult'});
 };
 const mutations = {
-  se(state, val){
-    state.current = val;
-    console.log('state.current=' + state.current);
-  },
   // login
   [types.LOGIN_CHECK](state){
     userCheck();
@@ -260,6 +252,7 @@ const mutations = {
       return
     }
     entSearch('name');
+    Router.push({path: '/home/entresult'});
   },
   [types.Search_Code](state){
     if (!state.search.keyword) {
@@ -267,13 +260,18 @@ const mutations = {
       return
     }
     entSearch('code');
+    Router.push({path: '/home/entresult'});
   },
   // personlist
   [types.Search_Two](state){
     personSearch('two');
+    Router.push({path: '/home/personresult'});
+
   },
   [types.Search_Three](state){
     personSearch('three')
+    Router.push({path: '/home/personresult'});
+
   },
   hold(state, val){
     let url;
@@ -340,28 +338,65 @@ const mutations = {
   },
   Hold_Search(state, type){
     let url;
-    console.log(1);
     if (type == 'ent') {
-      url='/static/data/enttable.json';
-      if(state.enttable.keyword.length==0){
+      url = '/static/data/enttable.json';
+      if (state.enttable.keyword.length == 0) {
         vue.$Message.error('请输入查询关键词');
         return
       }
-    }else {
-      url='/static/data/enttable.json';
-      if(state.persontable.keyword.length==0){
+    } else {
+      url = '/static/data/enttable.json';
+      if (state.persontable.keyword.length == 0) {
         vue.$Message.error('请输入查询关键词');
         return
       }
     }
     axios.get(url).then(function (res) {
       state.enttable.table = res.data;
-      console.log(2);
     }).catch(function (err) {
       console.log(err);
     });
-  }
+  },
+  toDetail(state, params){
+    console.log(params.type);
+    if (params.type == 'ent') {
+      state.search.keyword = params.name;
+      entSearch('name');
+      Router.push({path: '/home/entdetail'});
+    } else {
+      state.search.personname = params.name;
+      state.search.personcord = params.code;
+      personSearch('two');
+      Router.push({path: '/home/persondatail'});
+    }
+  },
+  remove (state, params) {
+    let index = params.index;
+    let url;
+    if (params.type == 'ent') {
+      url = '/static/data/enttable.json';
+      state.enttable.table.splice(index, 1);
+    } else {
+      url = '/static/data/enttable.json';
+      state.persontable.table.splice(index, 1);
+    }
+    axios.get(url).then(function (res) {
+      console.log('删除成功');
+    }).catch(function (err) {
+      console.log(err);
+    });
+  },
+  page(state, params){
+    let url;
+    if(params.type=='ent'){
+      state.enttable.current = params.index;
+    }else{
+      state.persontable.current = params.index;
+    }
 
+
+    console.log('state.current=' + state.current);
+  },
 
 };
 const getters = {

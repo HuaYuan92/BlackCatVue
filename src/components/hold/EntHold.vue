@@ -29,7 +29,7 @@
         <Table :columns="columns" :data="enttable.table" size="large" @on-selection-change="selection"
                @on-sort-change="sort"></Table>
       </div>
-      <div class="table_page">
+      <div class="table_page" v-show="76==76">
         <Page :total="76" @on-change="page" show-elevator :current="enttable.current"></Page>
       </div>
 
@@ -67,7 +67,7 @@
                 if (currentValue == keyword) {
                   return h('span', {
                     style: {
-                      color: 'red'
+                      color: '#5f96ff'
                     }
                   }, keyword);
                 }
@@ -79,7 +79,7 @@
           },
           {
             title: '主体代码',
-            key: 'age',
+            key: 'code',
             align: 'center'
           },
           {
@@ -87,20 +87,7 @@
             key: 'address',
             align: 'center',
             render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                    shape: "circle",
-                    class: '123123'
-                  },
-                  style: {
-                    marginRight: '5px',
-                    width: '100px',
-                    cursor: 'default',
-                  }
-                }, params.row.address),])
+              return h('div', params.row.address)
             },
             sortable: 'custom'
           },
@@ -111,28 +98,33 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
+                h('div', {
                   style: {
-                    marginRight: '5px'
+                    marginRight: '16px',
+                    color: '#5f96ff',
+                    display: 'inline-block',
+                    cursor: 'pointer',
                   },
                   on: {
                     click: () => {
-                      this.show(params.row.index)
+                      let param = {
+                        name: params.row.name,
+                        code: params.row.code,
+                        index: params.index
+                      };
+                      this.toDetail(param)
                     }
                   }
                 }, '查看详情'),
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'success',
-                    size: 'small'
+                    confirm: true,
+                    title: '确定删除这条黑名单吗?',
+                    placement: 'top-end',
                   },
                   on: {
-                    click: () => {
-                      this.remove(params.row.index)
+                    'on-ok': () => {
+                      this.remove(params.index)
                     }
                   }
                 }, '删除')
@@ -149,7 +141,6 @@
     ),
     methods: {
       holdsearch(){
-        console.log(13);
         this.$store.commit('Hold_Search', 'ent');
       },
       selection(info){
@@ -158,19 +149,28 @@
         this.modal = !modal;
         console.log(1);
       },
-      sort(c){
-        console.log(c);
+      sort(param){
+        console.log(param);
       },
-      show (index) {
-        console.log(this.enttable.current);
+      toDetail (params) {
+        params.type = 'ent';
+        this.$store.commit('toDetail', params);
       },
       remove (index) {
-        this.enttable.table.splice(index, 1);
+        let params = {
+          index: index,
+          type: "ent"
+        };
+
+        console.log(params);
+        this.$store.commit('remove', params);
       },
       page(index){
-        console.log('index=' + index);
-        this.$store.commit('se', index);
-        console.log('this.current=' + this.current);
+        let params = {
+          index: index,
+          type: 'ent'
+        }
+        this.$store.commit('page', params);
       }
 
     },
@@ -206,9 +206,8 @@
     }
     .content_box {
       width: 1200px;
-      height: 770px;
+      min-height: 270px;
       margin: 0 auto;
-      position: relative;
       .content_search {
         padding-top: 14px;
         padding-left: 16px;
@@ -222,9 +221,9 @@
       margin-top: 20px;
     }
     .table_page {
+      margin-top: 50px;
+      margin-bottom: 50px;
       width: 100%;
-      position: absolute;
-      bottom: 5%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -238,5 +237,4 @@
   .ivu-table-wrapper {
     border: none;
   }
-
 </style>

@@ -7,7 +7,7 @@
 <script>
   export default {
     name: 'app',
-    beforeCreate:function () {
+    beforeCreate: function () {
       this.$store.dispatch('ReadLocal');
     },
 
@@ -19,7 +19,7 @@
   @import "../node_modules/iview/dist/styles/iview.css";
 
   #app {
-    font-family: PingFangSC-Regular,'Avenir', Helvetica, Arial, sans-serif;
+    font-family: PingFangSC-Regular, 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -42,13 +42,31 @@
     width: 100%;
     min-width: 1400px;
     height: 100%;
-    min-height:740px;
+    min-height: 740px;
   }
+
   .ivu-poptip-body {
     text-align: left !important;
   }
-  .ivu-table:after{
+
+  .ivu-table:after {
     background-color: #fff !important;
   }
 
+  .ivu-table-sort {
+    height: 14px;
+  }
+
+  .ivu-table-large td {
+    height: 80px;
+  }
+
+  .ivu-poptip-content {
+    width: 180px;
+  }
+
+  .ivu-table-cell .ivu-poptip-rel {
+    color: #f3484d !important;
+    cursor: pointer;
+  }
 </style>
