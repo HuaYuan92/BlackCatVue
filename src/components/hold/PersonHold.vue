@@ -3,7 +3,7 @@
     <div class="box_entlist" key="3-1">
       <div class="content_search">
         <div class="ipt_box">
-          <Input v-model="enttable.keyword" placeholder="输入关键词" size="large" key="3-1" style="width: 980px;"> </Input>
+          <Input v-model="persontable.keyword" placeholder="输入关键词" size="large" key="3-1" style="width: 980px;"> </Input>
         </div>
         <Button type="primary" size="large" @click="holdsearch" class="button">
           <Icon type="ios-search" size="20" class="icon"></Icon>
@@ -13,24 +13,24 @@
     </div>
     <div class="title">
       <div>已保存企业黑名单</div>
-      <Button type="ghost" size="large" style="width: 100px;">批量操作</Button>
-      <Button type="ghost" size="large" style="width: 100px;">删除</Button>
+      <Button type="ghost" size="large" style="width: 120px;color:#6a6f83" @click="allAction">{{selectText}}</Button>
+      <Button type="ghost" size="large" style="width: 120px;" @click="modalShow">删除</Button>
     </div>
     <div class="content_box">
       <div class="content_table">
         <Modal
           v-model="modal"
-          title="对话框标题"
-          :loading="true"
+          @on-ok="removeAll"
+          :closable="false"
         >
-          <p>点击确定后，对话框将在 2秒 后关闭。</p>
+          <p>确认要删除这些黑名单吗？</p>
         </Modal>
 
-        <Table :columns="columns" :data="enttable.table" size="large" @on-selection-change="selection"
+        <Table :columns="columns" :data="persontable.table" size="large" @on-selection-change="selection"
                @on-sort-change="sort"></Table>
       </div>
-      <div class="table_page">
-        <Page :total="76" @on-change="page" show-elevator :current="enttable.current"></Page>
+      <div class="table_page" v-show="76==76">
+        <Page :total="76" @on-change="page" show-elevator :current="persontable.current"></Page>
       </div>
 
     </div>
@@ -40,34 +40,31 @@
 <script>
   import {mapGetters} from 'vuex'
   export default {
-    name: 'enthold',
+    name: 'personhold',
     beforeMount: function () {
       this.$store.dispatch('HoldFetch');
-
     },
     data: function () {
       return {
         modal: false,
+        select: true,
+        selectText: '批量操作',
+        selectArr: [],
         columns: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'right'
-          },
           {
             title: '主体名称',
             key: 'name',
             align: 'center',
-            render: (h, params) => {
+            render: (h, params) =>{
               const address = params.row.name;
-              const keyword = this.enttable.keyword;
+              const keyword = this.persontable.keyword;
               const reg = new RegExp("(" + keyword + ")");
               const splitArr = address.split(reg);
               const nodes = splitArr.map((currentValue) => {
                 if (currentValue == keyword) {
                   return h('span', {
                     style: {
-                      color: 'red'
+                      color: '#5f96ff'
                     }
                   }, keyword);
                 }
@@ -79,7 +76,7 @@
           },
           {
             title: '主体代码',
-            key: 'age',
+            key: 'code',
             align: 'center'
           },
           {
@@ -87,20 +84,7 @@
             key: 'address',
             align: 'center',
             render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                    shape: "circle",
-                    class: '123123'
-                  },
-                  style: {
-                    marginRight: '5px',
-                    width: '100px',
-                    cursor: 'default',
-                  }
-                }, params.row.address),])
+              return h('div', params.row.address)
             },
             sortable: 'custom'
           },
@@ -111,28 +95,33 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
+                h('div', {
                   style: {
-                    marginRight: '5px'
+                    marginRight: '16px',
+                    color: '#5f96ff',
+                    display: 'inline-block',
+                    cursor: 'pointer',
                   },
                   on: {
                     click: () => {
-                      this.show(params.row.index)
+                      let param = {
+                        name: params.row.name,
+                        code: params.row.code,
+                        index: params.index
+                      };
+                      this.toDetail(param)
                     }
                   }
                 }, '查看详情'),
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'success',
-                    size: 'small'
+                    confirm: true,
+                    title: '确定删除这条黑名单吗?',
+                    placement: 'top-end',
                   },
                   on: {
-                    click: () => {
-                      this.remove(params.row.index)
+                    'on-ok': () => {
+                      this.remove(params.index)
                     }
                   }
                 }, '删除')
@@ -144,33 +133,77 @@
     },
     computed: mapGetters(
       [
-        'enttable',
+        'persontable',
       ]
     ),
     methods: {
       holdsearch(){
-        console.log(13);
-        this.$store.commit('Hold_Search', 'ent');
+        this.$store.commit('Hold_Search', 'person');
       },
       selection(info){
-        console.log(info);
-        let modal = this.modal;
-        this.modal = !modal;
-        console.log(1);
+        this.selectArr = info;
+        console.log(this.selectArr);
       },
-      sort(c){
-        console.log(c);
+      sort(param){
+        console.log(param);
       },
-      show (index) {
-        console.log(this.enttable.current);
+      toDetail (params) {
+        params.type = 'person';
+        this.$store.commit('toDetail', params);
       },
       remove (index) {
-        this.enttable.table.splice(index, 1);
+        let params = {
+          index: index,
+          type: "person"
+        };
+
+        console.log(params);
+        this.$store.commit('remove', params);
+      },
+      modalShow(){
+        if (this.selectArr.length < 1) {
+          return
+        }
+        this.modal = true;
+      },
+      removeAll(){
+        console.log('执行批量操作中...');
+        let arr =this.selectArr;
+//        具体操作，等接口出来后再处理
+        let params = {
+          index: 1,
+          type: "person",
+          data:arr,
+        };
+        this.$store.commit('remove', params);
+
+      },
+      allAction(){
+        if (this.select) {
+          this.columns.unshift(
+            {
+              type: 'selection',
+              width: 60,
+              align: 'right'
+            }
+          );
+          this.selectArr = [];
+          this.select = false;
+          this.selectText = '取消批量操作'
+        } else {
+          this.columns.shift();
+          this.select = true;
+          this.selectText = '批量操作'
+          this.selectArr = [];
+        }
+
       },
       page(index){
-        console.log('index=' + index);
-        this.$store.commit('se', index);
-        console.log('this.current=' + this.current);
+        let params = {
+          index: index,
+          type: 'person'
+        };
+        this.$store.commit('page', params);
       }
 
     },
@@ -180,7 +213,6 @@
 <style scoped lang="less" rel="stylesheet/less">
   .box {
     width: 100%;
-    height: 100%;
     background-color: #ffffff;
     .box_entlist {
       height: 250px !important;
@@ -207,9 +239,8 @@
     }
     .content_box {
       width: 1200px;
-      min-height: 770px;
+      min-height: 270px;
       margin: 0 auto;
-      position: relative;
       .content_search {
         padding-top: 14px;
         padding-left: 16px;
@@ -223,9 +254,9 @@
       margin-top: 20px;
     }
     .table_page {
+      margin-top: 50px;
+      margin-bottom: 50px;
       width: 100%;
-      position: absolute;
-      bottom: 5%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -239,5 +270,4 @@
   .ivu-table-wrapper {
     border: none;
   }
-
 </style>

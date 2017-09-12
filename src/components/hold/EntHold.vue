@@ -13,17 +13,17 @@
     </div>
     <div class="title">
       <div>已保存企业黑名单</div>
-      <Button type="ghost" size="large" style="width: 100px;">批量操作</Button>
-      <Button type="ghost" size="large" style="width: 100px;">删除</Button>
+      <Button type="ghost" size="large" style="width: 120px;color:#6a6f83" @click="allAction">{{selectText}}</Button>
+      <Button type="ghost" size="large" style="width: 120px;" @click="modalShow">删除</Button>
     </div>
     <div class="content_box">
       <div class="content_table">
         <Modal
           v-model="modal"
-          title="对话框标题"
-          :loading="true"
+          @on-ok="removeAll"
+          :closable="false"
         >
-          <p>点击确定后，对话框将在 2秒 后关闭。</p>
+          <p>确认要删除这些黑名单吗？</p>
         </Modal>
 
         <Table :columns="columns" :data="enttable.table" size="large" @on-selection-change="selection"
@@ -43,22 +43,19 @@
     name: 'enthold',
     beforeMount: function () {
       this.$store.dispatch('HoldFetch');
-
     },
     data: function () {
       return {
         modal: false,
+        select: true,
+        selectText: '批量操作',
+        selectArr: [],
         columns: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'right'
-          },
           {
             title: '主体名称',
             key: 'name',
             align: 'center',
-            render: (h, params) => {
+            render: (h, params) =>{
               const address = params.row.name;
               const keyword = this.enttable.keyword;
               const reg = new RegExp("(" + keyword + ")");
@@ -144,10 +141,8 @@
         this.$store.commit('Hold_Search', 'ent');
       },
       selection(info){
-        console.log(info);
-        let modal = this.modal;
-        this.modal = !modal;
-        console.log(1);
+        this.selectArr = info;
+        console.log(this.selectArr);
       },
       sort(param){
         console.log(param);
@@ -165,11 +160,49 @@
         console.log(params);
         this.$store.commit('remove', params);
       },
+      modalShow(){
+        if (this.selectArr.length < 1) {
+          return
+        }
+        this.modal = true;
+      },
+      removeAll(){
+        console.log('执行批量操作中...');
+        let arr =this.selectArr;
+//        具体操作，等接口出来后再处理
+        let params = {
+          index: 1,
+          type: "ent",
+          data:arr,
+        };
+        this.$store.commit('remove', params);
+
+      },
+      allAction(){
+        if (this.select) {
+          this.columns.unshift(
+            {
+              type: 'selection',
+              width: 60,
+              align: 'right'
+            }
+          );
+          this.selectArr = [];
+          this.select = false;
+          this.selectText = '取消批量操作'
+        } else {
+          this.columns.shift();
+          this.select = true;
+          this.selectText = '批量操作'
+          this.selectArr = [];
+        }
+
+      },
       page(index){
         let params = {
           index: index,
           type: 'ent'
-        }
+        };
         this.$store.commit('page', params);
       }
 

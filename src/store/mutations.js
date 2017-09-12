@@ -345,7 +345,7 @@ const mutations = {
         return
       }
     } else {
-      url = '/static/data/enttable.json';
+      url = '/static/data/persontable.json';
       if (state.persontable.keyword.length == 0) {
         vue.$Message.error('请输入查询关键词');
         return
