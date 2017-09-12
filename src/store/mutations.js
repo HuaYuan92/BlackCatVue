@@ -163,28 +163,10 @@ const personSearch = function (num) {
   let url;
   if (num == 'two') {
     url = '/static/data/personresult.json';
-    if (!state.search.personname || !state.search.personcord) {
-      vue.$Message.error('请补全搜索信息!');
-      return
-    }
-    if (state.search.personcord && state.search.personcord.length != 18) {
-      vue.$Message.error('身份证位数错误');
-      return
-    }
+
   } else if (num == 'three') {
     url = '/static/data/null.json';
-    if (!state.search.personname || !state.search.personcord || !state.search.personphone) {
-      vue.$Message.error('请补全搜索信息!');
-      return
-    }
-    if (state.search.personcord && state.search.personcord.length != 18) {
-      vue.$Message.error('身份证位数错误');
-      return
-    }
-    if (state.search.personphone && state.search.personphone.length != 11) {
-      vue.$Message.error('手机号应为11位');
-      return
-    }
+
 
   }
   console.log('search person axios ing .......');
@@ -264,11 +246,31 @@ const mutations = {
   },
   // personlist
   [types.Search_Two](state){
+    if (!state.search.personname || !state.search.personcord) {
+      vue.$Message.error('请补全搜索信息!');
+      return
+    }
+    if (state.search.personcord && state.search.personcord.length != 18) {
+      vue.$Message.error('身份证位数错误');
+      return
+    }
     personSearch('two');
     Router.push({path: '/home/personresult'});
 
   },
   [types.Search_Three](state){
+    if (!state.search.personname || !state.search.personcord || !state.search.personphone) {
+      vue.$Message.error('请补全搜索信息!');
+      return
+    }
+    if (state.search.personcord && state.search.personcord.length != 18) {
+      vue.$Message.error('身份证位数错误');
+      return
+    }
+    if (state.search.personphone && state.search.personphone.length != 11) {
+      vue.$Message.error('手机号应为11位');
+      return
+    }
     personSearch('three')
     Router.push({path: '/home/personresult'});
 
@@ -366,8 +368,9 @@ const mutations = {
     } else {
       state.search.personname = params.name;
       state.search.personcord = params.code;
+      state.search.personcord = '123456789012345678';//待删
       personSearch('two');
-      Router.push({path: '/home/persondatail'});
+      Router.push({path: '/home/persondetail'});
     }
   },
   remove (state, params) {
@@ -388,9 +391,9 @@ const mutations = {
   },
   page(state, params){
     let url;
-    if(params.type=='ent'){
+    if (params.type == 'ent') {
       state.enttable.current = params.index;
-    }else{
+    } else {
       state.persontable.current = params.index;
     }
 

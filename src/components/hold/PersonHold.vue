@@ -21,6 +21,7 @@
         <Modal
           v-model="modal"
           @on-ok="removeAll"
+          title="消息提示"
           :closable="false"
         >
           <p>确认要删除这些黑名单吗？</p>
@@ -176,7 +177,7 @@
           data:arr,
         };
         this.$store.commit('remove', params);
-
+        this.selectArr = [];
       },
       allAction(){
         if (this.select) {
