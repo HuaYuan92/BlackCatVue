@@ -69,4 +69,10 @@
     color: #f3484d !important;
     cursor: pointer;
   }
+  .ivu-select-large .ivu-select-item{
+    padding:16px ;
+  }
+  .content_search .ivu-select-dropdown{
+    box-shadow: none;
+  }
 </style>
