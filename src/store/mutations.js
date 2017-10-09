@@ -161,6 +161,7 @@ const userCheck = function () {
     }
   }).catch(function (err) {
     console.log(err);
+    Router.push({path: '/home/entlist'});
   })
 };
 const personSearch = function (num) {

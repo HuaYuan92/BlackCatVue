@@ -75,4 +75,7 @@
   .content_search .ivu-select-dropdown{
     box-shadow: none;
   }
+  .ivu-menu-submenu-title{
+    width: 160px !important;
+  }
 </style>
