@@ -25,16 +25,16 @@
             </router-link>
           </Menu-item>
         </Submenu>
-        <Submenu name="2">
-          <template slot="title">
-            查询统计信息
-          </template>
-          <Menu-item name="2-1">
-            <router-link to="/home/infolist" class="router_link">
-              统计信息概览
-            </router-link>
-          </Menu-item>
-        </Submenu>
+        <!--<Submenu name="2">-->
+          <!--<template slot="title">-->
+            <!--查询统计信息-->
+          <!--</template>-->
+          <!--<Menu-item name="2-1">-->
+            <!--<router-link to="/home/infolist" class="router_link">-->
+              <!--统计信息概览-->
+            <!--</router-link>-->
+          <!--</Menu-item>-->
+        <!--</Submenu>-->
         <Submenu name="3">
           <template slot="title">
             已保存黑名单

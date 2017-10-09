@@ -135,16 +135,22 @@ const state = {
     num4: ""
   }
 };
+const baseUrl = "http://10.2.30.53:8080";
+let uid,token;
 
 const userCheck = function () {
   console.log('login ... ');
-  axios.get(location.origin + '/static/data/app.json').then(function (res) {
+  axios.post(baseUrl + '/api/login', JSON.stringify({
+    userName: state.logininfo.name,
+    password: state.logininfo.password
+  })).then(function (res) {
+    console.log(res);
+    vue.$Message.config({
+      top: 50,
+      duration: 3,
+    });
     let user = res.data.user;
     if (user.name == state.logininfo.name && user.password == state.logininfo.password) {
-      vue.$Message.config({
-        top: 50,
-        duration: 3,
-      });
       vue.$Message.success('登录成功!');
       console.log(' login success');
       localStorage.setItem('user', JSON.stringify(state.logininfo));
