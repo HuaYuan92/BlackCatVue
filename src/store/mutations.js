@@ -87,7 +87,6 @@ const option = {
 
   ]
 }
-
 const vue = new Vue();
 const state = {
   logininfo: JSON.parse(localStorage.getItem('user')) || {name: '', password: ''},
@@ -135,24 +134,33 @@ const state = {
     num4: ""
   }
 };
-const baseUrl = "http://10.2.30.53:8080";
-let uid,token;
+
+axios.defaults.baseURL= "http://10.2.30.53:8080";
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+let headers={};
 
 const userCheck = function () {
   console.log('login ... ');
-  axios.post(baseUrl + '/api/login', JSON.stringify({
+  axios.post('/api/login', JSON.stringify({
     userName: state.logininfo.name,
     password: state.logininfo.password
-  })).then(function (res) {
-    console.log(res);
+  }),
+  //   {
+  //   headers:headers
+  // }
+  ).then(function (res) {
+    console.log(res.data);
     vue.$Message.config({
       top: 50,
       duration: 3,
     });
-    let user = res.data.user;
-    if (user.name == state.logininfo.name && user.password == state.logininfo.password) {
+    let user = res.data;
+    if (user.code==200) {
       vue.$Message.success('登录成功!');
       console.log(' login success');
+      headers.token=user.obj.token;
+      headers.uid=user.obj.uid;
+      console.log(headers);
       localStorage.setItem('user', JSON.stringify(state.logininfo));
       Router.push({path: '/home/entlist'});
     } else {
@@ -161,7 +169,6 @@ const userCheck = function () {
     }
   }).catch(function (err) {
     console.log(err);
-    Router.push({path: '/home/entlist'});
   })
 };
 const personSearch = function (num) {
