@@ -135,34 +135,36 @@ const state = {
   }
 };
 
-axios.defaults.baseURL= "http://10.2.30.53:8080";
+axios.defaults.baseURL = "http://10.2.30.53:8080";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-let headers={};
+let headers = {};
+let query;
 
 const userCheck = function () {
   console.log('login ... ');
   axios.post('/api/login', JSON.stringify({
     userName: state.logininfo.name,
     password: state.logininfo.password
-  }),
-  //   {
-  //   headers:headers
-  // }
-  ).then(function (res) {
+  })).then(function (res) {
     console.log(res.data);
     vue.$Message.config({
       top: 50,
       duration: 3,
     });
     let user = res.data;
-    if (user.code==200) {
+    if (user.code == 200) {
       vue.$Message.success('登录成功!');
       console.log(' login success');
-      headers.token=user.obj.token;
-      headers.uid=user.obj.uid;
-      console.log(headers);
+      headers.token = user.obj.token;
+      headers.uid = user.obj.uid;
       localStorage.setItem('user', JSON.stringify(state.logininfo));
       Router.push({path: '/home/entlist'});
+      axios.get('/api/query', {headers: headers}).then(function (res) {
+        console.log(res.data.obj);
+        query=res.data.obj;
+      }).catch(function (err) {
+        console.log(err);
+      })
     } else {
       vue.$Message.error('登录失败!');
       Router.push({path: '/login'});
@@ -243,6 +245,7 @@ const mutations = {
   },
   // entlist
   [types.Search_Name](state){
+    state.search.keyword=state.search.keyword.trim();
     if (!state.search.keyword) {
       vue.$Message.error('请输入公司名称 ');
       return
@@ -251,6 +254,7 @@ const mutations = {
     Router.push({path: '/home/entresult'});
   },
   [types.Search_Code](state){
+    state.search.keyword=state.search.keyword.trim();
     if (!state.search.keyword) {
       vue.$Message.error('请输入公司代码 ');
       return
@@ -260,6 +264,8 @@ const mutations = {
   },
   // personlist
   [types.Search_Two](state){
+    state.search.personname=state.search.personname.trim();
+    state.search.personcord=state.search.personcord.trim();
     if (!state.search.personname || !state.search.personcord) {
       vue.$Message.error('请补全搜索信息!');
       return
@@ -273,6 +279,9 @@ const mutations = {
 
   },
   [types.Search_Three](state){
+    state.search.personname=state.search.personname.trim();
+    state.search.personcord=state.search.personcord.trim();
+    state.search.personphone=state.search.personphone.trim();
     if (!state.search.personname || !state.search.personcord || !state.search.personphone) {
       vue.$Message.error('请补全搜索信息!');
       return
